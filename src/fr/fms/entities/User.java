@@ -17,7 +17,7 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User - Id: " + getId() + "   Login: " + getLogin() + "   Password: " + getPassword();
+		return "[User - Id: " + getId() + "   Login: " + getLogin() + "   Password: " + getPassword() + "]";
 	}
 	
 	public int getId() {
