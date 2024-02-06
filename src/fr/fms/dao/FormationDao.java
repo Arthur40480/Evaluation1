@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import fr.fms.entities.Article;
 import fr.fms.entities.Formation;
 
 public class FormationDao implements Dao<Formation>{

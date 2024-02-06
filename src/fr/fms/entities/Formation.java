@@ -14,6 +14,7 @@ public class Formation {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.duration = duration;
 		this.remote = remote;
 		this.unitaryPrice = unitaryPrice;
 		this.category = category;
