@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import fr.fms.authentication.Authenticate;
 import fr.fms.business.IBusinessImpl;
@@ -31,11 +32,12 @@ public class ShopApp {
 	private static int idUser = 0;
 	private static String login = null; 
 	
+
 	public static void main(String[] args) {
 		System.out.println("Bonjour et bienvenu dans ma boutique, voici la liste d'articles en stock\n");
 		displayArticles();
 		int choice = 0;
-		while(choice != 8) {
+		while(choice != 9) {
 			displayMenu();
 			choice = scanInt();
 			switch(choice) {
@@ -46,16 +48,18 @@ public class ShopApp {
 				case 3 : displayCart(true);
 					break;					
 				case 4 : displayArticles();
-					break;						
-				case 5 : displayCategories();
 					break;
-				case 6 : displayArticlesByCategoryId();
+				case 5 : displayFormationsByKeyword();
 					break;
-				case 7 : connection();
+				case 6 : displayCategories();
 					break;
-				case 8 : System.out.println("à bientôt dans notre boutique :)");
+				case 7 : displayArticlesByCategoryId();
+					break;
+				case 8 : connection();
+					break;
+				case 9 : System.out.println("à bientôt dans notre boutique :)");
 					break;					
-				default : System.out.println("veuillez saisir une valeur entre 1 et 8");
+				default : System.out.println("veuillez saisir une valeur entre 1 et 9");
 			}
 		}
 	}
@@ -70,10 +74,11 @@ public class ShopApp {
 		System.out.println("2 : Retirer un article du panier");
 		System.out.println("3 : Afficher mon panier + total pour passer commande");
 		System.out.println("4 : Afficher tous les articles en stock");
-		System.out.println("5 : Afficher toutes les catégories en base");
-		System.out.println("6 : Afficher tous les articles d'une catégorie");
-		System.out.println("7 : Connexion(Deconnexion) à votre compte");
-		System.out.println("8 : sortir de l'application");
+		System.out.println("5 : Rechercher un article via un mot-clé");
+		System.out.println("6 : Afficher toutes les catégories en base");
+		System.out.println("7 : Afficher tous les articles d'une catégorie");
+		System.out.println("8 : Connexion(Deconnexion) à votre compte");
+		System.out.println("9 : sortir de l'application");
 	}
 	
 	/**
@@ -115,6 +120,23 @@ public class ShopApp {
 			System.out.println(separator);
 		}
 		else System.out.println("cette catégorie n'existe pas !");
+	}
+	
+	public static void displayFormationsByKeyword() {
+	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
+	    		+ "--------------------+----------+--------+--------+";
+		System.out.println("saisissez un mot clé");
+		String keyword = scan.next();
+		ArrayList<Formation> formationList = business.readFormationsByKeyword(keyword);
+		if(formationList.size() == 0) {
+			System.out.println("Aucune formation correspondante n'a été trouvée pour le mot-clé '" + keyword + "'.");
+		} else {
+			System.out.println(separator);
+			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
+			System.out.println(separator);
+			formationList.forEach(f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s |%n", f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice()));
+			System.out.println(separator);
+		}
 	}
 
 	/**

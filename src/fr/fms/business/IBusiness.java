@@ -56,4 +56,11 @@ public interface IBusiness {
 	 * @return Liste de formation
 	 */
 	public ArrayList<Formation> readArticlesByCatId(int idCat);
+	
+	/**
+	 * méthode qui renvoi toutes les formations qui contiennent un mot-clé
+	 * @param string est le mot-clé
+	 * @return Liste de formation
+	 */
+	public ArrayList<Formation> readFormationsByKeyword(String keyword);
 }

@@ -14,7 +14,7 @@ import fr.fms.entities.OrderItem;
 public class IBusinessImpl implements IBusiness {	
 	private HashMap<Integer,Formation> cart;
 	//private Dao<Article> articleDao = DaoFactory.getArticleDao();
-	private FormationDao articleDao = new FormationDao();
+	private FormationDao formationDao = new FormationDao();
 	//private Dao<User> userDao = DaoFactory.getUserDao();
 	private Dao<Category> categoryDao = DaoFactory.getCategoryDao();
 	private Dao<Order> orderDao = DaoFactory.getOrderDao();
@@ -65,7 +65,7 @@ public class IBusinessImpl implements IBusiness {
 
 	@Override
 	public ArrayList<Formation> readArticles() {
-		return articleDao.readAll();
+		return formationDao.readAll();
 	}
 	
 	@Override
@@ -75,12 +75,17 @@ public class IBusinessImpl implements IBusiness {
 
 	@Override
 	public Formation readOneArticle(int id) {
-		return articleDao.read(id);
+		return formationDao.read(id);
 	}
 
 	@Override
 	public ArrayList<Formation> readArticlesByCatId(int id) {
-		return ((FormationDao) articleDao).readAllByCat(id);
+		return ((FormationDao) formationDao).readAllByCat(id);
+	}
+	
+	@Override
+	public ArrayList<Formation> readFormationsByKeyword(String keyword) {
+		return ((FormationDao) formationDao).readAllByKeyword(keyword);
 	}
 
 	/**
