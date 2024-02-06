@@ -11,8 +11,14 @@ public class TestApplication {
 	
 	public static void main(String[] args) {
 		UserDao dao = new UserDao();
-		for(User formation : dao.readAll()) {
-			System.out.println(formation);
-		}
+		
+		// Test de la méthode displayFormationByKeyword():
+		String keyword = "Developpement";
+		String keyword2 = "Cuisine";
+		
+		FormationDao formationDao = new FormationDao();
+		System.out.println(formationDao.readAllByKeyword(keyword));
+		System.out.println(formationDao.readAllByKeyword(keyword2));
+	
 	}
 }
