@@ -21,7 +21,7 @@ public class ShopApp {
 	
 	public static final String TEXT_BLUE = "\u001B[36m";
 	public static final String TEXT_RESET = "\u001B[0m";	
-	private static final String COLUMN_ID = "IDENTIFIANT";
+	private static final String COLUMN_ID = "ID";
 	private static final String COLUMN_NAME = "NAME";
 	private static final String COLUMN_DESCRIPTION = "DESCRIPTION";
 	private static final String COLUMN_DURATION = "DURATION";
@@ -90,7 +90,7 @@ public class ShopApp {
 	    business.readArticles().forEach(article -> {
 	    	System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s |%n",
        article.getId(), article.getName(), article.getDescription(),
-       article.getDuration(), article.isRemote(), article.getUnitaryPrice());
+       article.getDuration() + "jours", article.isRemote(), article.getUnitaryPrice());
 	    });
 	    System.out.println(separator);
 	}
@@ -102,13 +102,17 @@ public class ShopApp {
 		System.out.println("saisissez l'id de la catégorie concerné");
 		int id = scanInt();
 		Category category = business.readOneCategory(id);
+	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
+	    		+ "--------------------+----------+--------+--------+";
 		if(category != null) {
-			System.out.printf("              AFFICHAGE PAR CATEGORIE    %n");
-			System.out.printf("                     %-10s               %n",category.getName());
-			System.out.printf("------------------------------------------------------------%n");
-			System.out.printf("%-15s | %-15s | %-15s | %-15s %n",COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
-			System.out.printf("------------------------------------------------------------%n");
-			business.readArticlesByCatId(id).forEach( f -> System.out.printf("%-15s | %-15s | %-15s | %-15s%n",f.getId(), f.getName(), f.getDescription(), f.getDuration(), f.isRemote(), f.getUnitaryPrice(), f.getCategory()));
+			System.out.println();
+			System.out.printf("                                                                 AFFICHAGE PAR CATEGORIE    %n");
+			System.out.printf("                                                                        %-10s               %n",category.getName());
+			System.out.println(separator);
+			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
+			System.out.println(separator);
+			business.readArticlesByCatId(id).forEach( f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s |%n",f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice()));
+			System.out.println(separator);
 		}
 		else System.out.println("cette catégorie n'existe pas !");
 	}
@@ -117,8 +121,12 @@ public class ShopApp {
 	 * Méthode qui affiche toutes les catégories
 	 */
 	private static void displayCategories() {
-		System.out.println(Category.centerString(COLUMN_ID) + Category.centerString(COLUMN_NAME) + Category.centerString(COLUMN_DESCRIPTION));
-		business.readCategories().forEach(System.out::println);		
+	    String separator = "+------+----------------------------------+-------------------------------------------------------------+";
+	    System.out.println(separator);
+		System.out.printf("| %-4s | %-32s | %-59s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION);
+		System.out.println(separator);
+		business.readCategories().forEach(c -> System.out.printf("| %-4s | %-32s | %-59s |%n", c.getId(), c.getName(), c.getDescription()));	
+		System.out.println(separator);
 	}
 	
 	/**
@@ -159,14 +167,17 @@ public class ShopApp {
 		    System.out.println(separator);
 		    System.out.println(header);
 		    System.out.println(separator);
-			business.getCart().forEach(f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s | %-8s |", f.getId(), f.getName(), f.getDescription(), f.getDuration(), f.isRemote(), f.getUnitaryPrice(), String.valueOf(f.getQuantity())));
-			System.out.println();
+			business.getCart().forEach(f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s | %-8s |%n", f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice(), String.valueOf(f.getQuantity())));
 			if(flag) {
+				System.out.println(separator);
+				System.out.println();
 				System.out.println("MONTANT TOTAL : " + business.getTotal());
 				System.out.println("Souhaitez vous passer commande ? Oui/Non :");
 				if(scan.next().equalsIgnoreCase("Oui")) {
 					nextStep();
 				}
+			}else {
+				System.out.println(separator);
 			}
 		}
 	}
