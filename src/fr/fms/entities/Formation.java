@@ -34,6 +34,7 @@ public class Formation {
 		this.unitaryPrice = unitaryPrice;
 	}
 	
+	@Override
 	public String toString() {
 		return "Formation:" + getName() + ", " + getDescription() + ", durée: " + getDuration() + "jours, remote: " + isRemote()+ ", prix: " + getUnitaryPrice() + "€"; 
 	}
