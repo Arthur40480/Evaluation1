@@ -87,11 +87,17 @@ public class IBusinessImpl implements IBusiness {
 	public ArrayList<Formation> readFormationsByKeyword(String keyword) {
 		return ((FormationDao) formationDao).readAllByKeyword(keyword);
 	}
+	
+	@Override
+	public ArrayList<Formation> readRemoteFormations() {
+		return((FormationDao) formationDao).readAllRemoteFormation();
+	}
+	
+	@Override
+	public ArrayList<Formation> readOnsiteFormations() {
+		return((FormationDao) formationDao).readAllOnsiteFormation();
+	}
 
-	/**
-	 * renvoi le total de la commande en cours
-	 * @return total
-	 */
 	public double getTotal() {
 		double [] total = {0};
 		cart.values().forEach((a) -> total[0] += a.getUnitaryPrice() * a.getQuantity()); 	

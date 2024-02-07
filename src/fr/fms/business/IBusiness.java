@@ -63,4 +63,16 @@ public interface IBusiness {
 	 * @return Liste de formation
 	 */
 	public ArrayList<Formation> readFormationsByKeyword(String keyword);
+	
+	/**
+	 * méthode qui renvoi toutes les formations qui sont en distanciel
+	 * @return Liste de formation
+	 */
+	public ArrayList<Formation> readRemoteFormations();
+	
+	/**
+	 * méthode qui renvoi toutes les formations qui sont en présentiel
+	 * @return Liste de formation
+	 */
+	public ArrayList<Formation> readOnsiteFormations();
 }

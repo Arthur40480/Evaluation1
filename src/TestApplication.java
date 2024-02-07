@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import fr.fms.dao.CategoryDao;
 import fr.fms.dao.FormationDao;
 import fr.fms.dao.UserDao;
@@ -10,7 +8,6 @@ import fr.fms.entities.User;
 public class TestApplication {
 	
 	public static void main(String[] args) {
-		UserDao dao = new UserDao();
 		FormationDao formationDao = new FormationDao();
 		
 		// Test de la méthode readAllByKeyword():
