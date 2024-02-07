@@ -43,8 +43,8 @@ public class Authenticate {
 		return ((CustomerDao)customerDao).findCustomerByEmail(email);
 	}
 
-	public void addUser(String email, String password) {
-		userDao.create(new User(email, password));		
+	public void addUser(String email, String password, boolean isAdmin) {
+		userDao.create(new User(email, password, isAdmin));		
 	}
 
 	public boolean addCustomer(Customer customer) {
