@@ -22,6 +22,9 @@ public class ShopApp {
 	private static final String COLUMN_DURATION = "DURATION";
 	private static final String COLUMN_REMOTE = "REMOTE";
 	private static final String COLUMN_PRICE = "PRIX";
+	private static final String COLUMN_QUANTITY = "QUANTITY";
+	private static final String COLUMN_DATE = "DATE";
+	private static final String COLUMN_AMOUNT = "AMOUNT";
 	
 	private static int idUser = 0;
 	private static String login = null; 
@@ -29,7 +32,7 @@ public class ShopApp {
 	
 
 	public static void main(String[] args) {
-		System.out.println("Bonjour et bienvenu dans ma boutique, voici la liste d'articles en stock\n");
+		System.out.println("Bonjour et bienvenue chez Udemmy, voici la liste des formations que nous proposons. \n");
 		displayFormations();
 		int choice = 0;
 		while(choice != 11) {
@@ -56,7 +59,7 @@ public class ShopApp {
 					break;
 				case 10 : connection();
 					break;
-				case 11 : System.out.println("à bientôt dans notre boutique :)");
+				case 11 : System.out.println("à bientôt chez Udemmy !");
 					break;					
 				default : 
 					if(isAdmin) {
@@ -67,10 +70,10 @@ public class ShopApp {
 							break;
 						case 14 : displayCustomerOrders();
 							break;
-						default : System.out.println("veuillez saisir une valeur entre 1 et 14");
+						default : System.out.println("Veuillez saisir une valeur entre 1 et 14");
 						}
 					}else {
-						System.out.println("veuillez saisir une valeur entre 1 et 11");
+						System.out.println("Veuillez saisir une valeur entre 1 et 11");
 					}
 			}
 		}
@@ -127,7 +130,7 @@ public class ShopApp {
 					break;
 				case 4: 
 					break;
-				default : System.out.println("veuillez saisir une valeur entre 1 et 4");
+				default : System.out.println("Veuillez saisir une valeur entre 1 et 4");
 			}
 		}
 	}
@@ -155,7 +158,7 @@ public class ShopApp {
 					break;
 				case 4: 
 					break;
-				default : System.out.println("veuillez saisir une valeur entre 1 et 4");
+				default : System.out.println("Veuillez saisir une valeur entre 1 et 4");
 			}
 		}
 	}
@@ -170,7 +173,7 @@ public class ShopApp {
 		String description = scan.nextLine();
 		System.out.println("Saisissez la durée (En jours) de la formation");
 		int duration = scanInt();
-		System.out.println("En remote ? Oui/Non");
+		System.out.println("En distanciel ? Oui/Non");
 		boolean remote;
 		if(scan.next().equalsIgnoreCase("Oui")) {
 			remote = true;
@@ -187,7 +190,7 @@ public class ShopApp {
 				System.out.println("Ajout de la formation ok !");
 			}
 		}else {
-			System.out.println("l'id de la catégorie que vous avez saisie n'existe pas !");
+			System.out.println("L'id de la catégorie que vous avez saisie n'existe pas !");
 		}
 	}
 	
@@ -222,10 +225,10 @@ public class ShopApp {
 					System.out.println("Mise à jour de la formation ok !");
 				}
 			} else{
-				System.out.println("l'id de la catégorie que vous avez saisie n'existe pas !");
+				System.out.println("L'id de la catégorie que vous avez saisie n'existe pas !");
 			}
 		}else {
-			System.out.println("la formation que vous souhaitez mettre à jour n'existe pas, pb de saisi id");
+			System.out.println("La formation que vous souhaitez mettre à jour n'existe pas, pb de saisi id");
 		}
 	}
 	
@@ -240,7 +243,7 @@ public class ShopApp {
 				System.out.println("Suppression de la formation ok !");	
 			}
 		}else {
-			System.out.println("la catégorie que vous souhaitez supprimer n'existe pas, pb de saisi id");
+			System.out.println("La catégorie que vous souhaitez supprimer n'existe pas, pb de saisi id");
 		}
 	}
 	
@@ -248,8 +251,7 @@ public class ShopApp {
 	 * Méthode qui affiche tous les articles en base en centrant le texte 
 	 */
 	public static void displayFormations() { 		
-	    String header = String.format("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |",
-                "ID", "Name", "Description", "Duration", "Remote", "Price");
+	    String header = String.format("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
 	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+";
 	    System.out.println(separator);
 	    System.out.println(header);
@@ -266,7 +268,7 @@ public class ShopApp {
 	 * Méthode qui affiche tous les articles par catégorie en utilisant printf
 	 */
 	private static void displayFormationsByCategoryId() {
-		System.out.println("saisissez l'id de la catégorie concerné");
+		System.out.println("Saisissez l'id de la catégorie concerné");
 		int id = scanInt();
 		Category category = business.readOneCategory(id);
 	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+";
@@ -280,7 +282,7 @@ public class ShopApp {
 			business.readFormationsByCatId(id).forEach( f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n",f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice() + "€"));
 			System.out.println(separator);
 		}
-		else System.out.println("cette catégorie n'existe pas !");
+		else System.out.println("Cette catégorie n'existe pas !");
 	}
 	
 	/**
@@ -288,12 +290,13 @@ public class ShopApp {
 	 */
 	public static void displayFormationsByKeyword() {
 	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+";
-		System.out.println("saisissez un mot clé");
+		System.out.println("Saisissez un mot clé");
 		String keyword = scan.next();
 		ArrayList<Formation> formationList = business.readFormationsByKeyword(keyword);
 		if(formationList.size() == 0) {
 			System.out.println("Aucune formation correspondante n'a été trouvée pour le mot-clé '" + keyword + "'.");
 		} else {
+			System.out.printf("                                                              RESULTAT DE LA RECHERCHE AVEC LE MOT-CLE: '" + keyword + "'   %n");
 			System.out.println(separator);
 			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
 			System.out.println(separator);
@@ -381,7 +384,7 @@ public class ShopApp {
 				System.out.println("Mise à jour de la catégorie ok !");
 			}
 		}else {
-			System.out.println("la catégorie que vous souhaitez mettre à jour n'existe pas, pb de saisi id");
+			System.out.println("La catégorie que vous souhaitez mettre à jour n'existe pas, pb de saisi id");
 		}
 	}
 	
@@ -400,7 +403,7 @@ public class ShopApp {
 				}
 			}
 		}else {
-			System.out.println("la catégorie que vous souhaitez supprimer n'existe pas, pb de saisi id");
+			System.out.println("La catégorie que vous souhaitez supprimer n'existe pas, pb de saisi id");
 		}
 	}
 	
@@ -425,7 +428,7 @@ public class ShopApp {
 			business.addToCart(formation);
 			displayCart(false);
 		}
-		else System.out.println("l'article que vous souhaitez ajouter n'existe pas, pb de saisi id");
+		else System.out.println("L'article que vous souhaitez ajouter n'existe pas, pb de saisi id");
 	} 
 	
 	/**
@@ -434,9 +437,9 @@ public class ShopApp {
 	private static void displayCart(boolean flag) {
 		if(business.isCartEmpty()) 	System.out.println("PANIER VIDE");
 		else {
-			System.out.println("CONTENU DU PANIER :");
+			System.out.println("                                                                        CONTENU DU PANIER :");
 		    String header = String.format("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s | %-6s |",
-	                "ID", "Name", "Description", "Duration", "Remote", "Price", "Quantity");
+	                COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE, COLUMN_QUANTITY);
 		    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+----------+";
 		    System.out.println(separator);
 		    System.out.println(header);
@@ -460,13 +463,13 @@ public class ShopApp {
 	 * Méthode qui affiche les commandes d'un client via sont id
 	 */
 	public static void displayCustomerOrders() {
-	    String header = String.format("| %-4s | %-20s | %-20s |", "ID", "MONTANT", "DATE");
+	    String header = String.format("| %-4s | %-20s | %-20s |", COLUMN_ID, COLUMN_AMOUNT, COLUMN_DATE);
 	    String separator = "+------+----------------------+----------------------+";
 		System.out.println("Saisissez l'id du client pour lequel vous souhaitez afficher les commandes.");
 		int id = scanInt();
 		if(business.readCustomerById(id) != null) {
 			if(business.readAllOrderByCustomerId(id).size() > 0) {
-				System.out.println("HISTORIQUE DES COMMANDES DU CLIENT N°" + id);
+				System.out.println("        HISTORIQUE DES COMMANDES DU CLIENT N°" + id);
 				System.out.println(separator);
 				System.out.println(header);
 				System.out.println(separator);
@@ -519,14 +522,14 @@ public class ShopApp {
 			if(customer == null) {
 				System.out.println("Nous n'avons pas de compte client associé, nous allons le créer ");
 				scan.nextLine();	
-				System.out.println("saisissez votre nom :");
+				System.out.println("Saisissez votre nom :");
 				String name = scan.nextLine();
-				System.out.println("saisissez votre prénom :");
+				System.out.println("Saisissez votre prénom :");
 				String fName = scan.next();					
-				System.out.println("saisissez votre tel :");
+				System.out.println("Saisissez votre tel :");
 				String tel = scan.next();		
 				scan.nextLine(); 
-				System.out.println("saisissez votre adresse :");
+				System.out.println("Saisissez votre adresse :");
 				String address = scan.nextLine();
 				Customer cust = new Customer(name, fName, email, tel, address, idUser); 
 				if(authenticate.addCustomer(cust))	
@@ -537,7 +540,7 @@ public class ShopApp {
 				return customer.getIdCustomer();
 			}
 		}
-		else System.out.println("vous n'avez pas saisi un email valide");	
+		else System.out.println("Vous n'avez pas saisi un email valide");	
 		return 0;
 	}
 
@@ -558,9 +561,9 @@ public class ShopApp {
 			}				
 		}
 		else {
-			System.out.println("saisissez votre login : ");
+			System.out.println("Saisissez votre login : ");
 			String log = scan.next();
-			System.out.println("saisissez votre password : ");
+			System.out.println("Saisissez votre password : ");
 			String pwd = scan.next();
 			
 			int id = authenticate.existUser(log,pwd);
@@ -579,7 +582,7 @@ public class ShopApp {
 					isAdmin = true;	
 				}
 			}else {
-				System.out.println("login ou password incorrect");
+				System.out.println("Login ou password incorrect");
 				System.out.println("Nouvel utilisateur, pour créer un compte, tapez ok");
 				String ok = scan.next();
 				if(ok.equalsIgnoreCase("ok")) {
@@ -593,16 +596,16 @@ public class ShopApp {
 	 * Méthode qui ajoute un nouvel utilisateur en base
 	 */
 	public static void newUser() {
-		System.out.println("saisissez un login :");
+		System.out.println("Saisissez un login :");
 		String login = scan.next();			
 		int id = authenticate.existUser(login);	
 		if(id == 0) { 
-			System.out.println("saisissez votre password :");
+			System.out.println("Saisissez votre password :");
 			String password = scan.next();
 			authenticate.addUser(login,password, false);		
 			System.out.println("Ne perdez pas ces infos de connexion...");
 			stop(2);
-			System.out.println("création de l'utilisateur terminé, merci de vous connecter");
+			System.out.println("Création de l'utilisateur terminé, merci de vous connecter");
 		}
 		else	System.out.println("Login déjà existant en base, veuillez vous connecter");
 	}
@@ -617,7 +620,7 @@ public class ShopApp {
 
 	public static int scanInt() {
 		while(!scan.hasNextInt()) {
-			System.out.println("saisissez une valeur entière svp");
+			System.out.println("Saisissez une valeur entière svp");
 			scan.next();
 		}
 		return scan.nextInt();
