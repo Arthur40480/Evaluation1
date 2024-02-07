@@ -5,6 +5,7 @@ import java.util.HashMap;
 import fr.fms.dao.FormationDao;
 import fr.fms.dao.UserDao;
 import fr.fms.dao.CategoryDao;
+import fr.fms.dao.OrderDao;
 import fr.fms.dao.CustomerDao;
 import fr.fms.dao.Dao;
 import fr.fms.dao.DaoFactory;
@@ -144,6 +145,11 @@ public class IBusinessImpl implements IBusiness {
 	@Override
 	public ArrayList<Category> readCategories() {
 		return categoryDao.readAll();
+	}
+	
+	@Override
+	public ArrayList<Order> readAllOrderByCustomerId(int id){
+		return((OrderDao) orderDao).readAllByCustomerId(id);
 	}
 
 	public double getTotal() {

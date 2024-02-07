@@ -1,6 +1,7 @@
 package fr.fms.business;
 import java.util.ArrayList;
 import fr.fms.entities.Formation;
+import fr.fms.entities.Order;
 import fr.fms.entities.User;
 import fr.fms.entities.Category;
 import fr.fms.entities.Customer;
@@ -140,4 +141,11 @@ public interface IBusiness {
 	 * @return true si ok, sinon false
 	 */
 	public boolean deleteCategory(Category category);
+	
+	/**
+	 * Méthode qui permet de supprimer une catégorie
+	 * @param category concernée
+	 * @return true si ok, sinon false
+	 */
+	public ArrayList<Order> readAllOrderByCustomerId(int id);
 }

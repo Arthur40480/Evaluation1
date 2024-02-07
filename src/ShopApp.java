@@ -65,7 +65,9 @@ public class ShopApp {
 							break;
 						case 13 : displayFormationsMenu();
 							break;
-						default : System.out.println("veuillez saisir une valeur entre 1 et 13");
+						case 14 : displayCustomerOrders();
+							break;
+						default : System.out.println("veuillez saisir une valeur entre 1 et 14");
 						}
 					}else {
 						System.out.println("veuillez saisir une valeur entre 1 et 11");
@@ -98,6 +100,7 @@ public class ShopApp {
 			System.out.println("------- OPTIONS ADMINISTRATEUR -------");
 			System.out.println("12 : Gérer les catégories");
 			System.out.println("13 : Gérer les formations");
+			System.out.println("14 : Afficher les commandes d'un client");
 		}
 	}
 	
@@ -459,15 +462,31 @@ public class ShopApp {
 		}
 	}
 	
+	/**
+	 * Méthode qui affiche les commandes d'un client via sont id
+	 */
 	public static void displayCustomerOrders() {
+	    String header = String.format("| %-4s | %-20s | %-20s |", "ID", "MONTANT", "DATE");
+	    String separator = "+------+----------------------+----------------------+";
 		System.out.println("Saisissez l'id du client pour lequel vous souhaitez afficher les commandes.");
 		int id = scanInt();
 		if(business.readCustomerById(id) != null) {
-			
+			if(business.readAllOrderByCustomerId(id).size() > 0) {
+				System.out.println("HISTORIQUE DES COMMANDES DU CLIENT N°" + id);
+				System.out.println(separator);
+				System.out.println(header);
+				System.out.println(separator);
+				business.readAllOrderByCustomerId(id).forEach( o -> System.out.printf("| %-4s | %-20s | %-20s |%n", o.getIdOrder(), o.getAmount() + "€", o.getDate()));
+				System.out.println(separator);
+				System.out.println();
+			}else {
+				System.out.println("Ce client n'a pas encore effectué de commande !");
+			}
 		} else {
 			System.out.println("Le client que vous avez saisi n'existe pas !");
 		}
 	}
+	
 	/**
 	 * Méthode qui passe la commande, l'utilisateur doit être connecté
 	 * si c'est le cas, l'utilisateur sera invité à associé un client à sa commande
