@@ -12,11 +12,13 @@ Use Shop;
 CREATE TABLE T_Users (
 	IdUser				int(4)		PRIMARY KEY AUTO_INCREMENT,
 	Login				varchar(20)	NOT NULL UNIQUE,
-	Password			varchar(20)	NOT NULL
+	Password			varchar(20)	NOT NULL,
+	Admin				BOOLEAN		NOT NULL,
 ) ENGINE = InnoDB;
 
-INSERT INTO T_Users (IdUser, Login, Password) VALUES ( 1, 'Ambre' ,	'1234' );
-INSERT INTO T_Users (IdUser, Login, Password) VALUES ( 2, 'Arthur',	'azerty' );
+INSERT INTO T_Users (IdUser, Login, Password) VALUES ( 1, 'Admin' ,	'1', true);
+INSERT INTO T_Users (IdUser, Login, Password) VALUES ( 2, 'Ambre' ,	'1234', false );
+INSERT INTO T_Users (IdUser, Login, Password) VALUES ( 3, 'Arthur',	'azerty', false );
 
 SELECT * FROM T_Users;
 
