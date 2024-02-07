@@ -3,6 +3,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import fr.fms.dao.FormationDao;
+import fr.fms.dao.UserDao;
 import fr.fms.dao.Dao;
 import fr.fms.dao.DaoFactory;
 import fr.fms.entities.Formation;
@@ -10,12 +11,12 @@ import fr.fms.entities.Category;
 import fr.fms.entities.Customer;
 import fr.fms.entities.Order;
 import fr.fms.entities.OrderItem;
+import fr.fms.entities.User;
 
 public class IBusinessImpl implements IBusiness {	
 	private HashMap<Integer,Formation> cart;
-	//private Dao<Article> articleDao = DaoFactory.getArticleDao();
 	private FormationDao formationDao = new FormationDao();
-	//private Dao<User> userDao = DaoFactory.getUserDao();
+	private Dao<User> userDao = DaoFactory.getUserDao();
 	private Dao<Category> categoryDao = DaoFactory.getCategoryDao();
 	private Dao<Order> orderDao = DaoFactory.getOrderDao();
 	private Dao<OrderItem> orderItemDao = DaoFactory.getOrderItemDao();
@@ -96,6 +97,11 @@ public class IBusinessImpl implements IBusiness {
 	@Override
 	public ArrayList<Formation> readOnsiteFormations() {
 		return((FormationDao) formationDao).readAllOnsiteFormation();
+	}
+	
+	@Override 
+	public User readUserById(int id) {
+		return ((UserDao) userDao).read(id);
 	}
 
 	public double getTotal() {

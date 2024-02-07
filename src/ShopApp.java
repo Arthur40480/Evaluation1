@@ -4,6 +4,7 @@ import java.util.Scanner;
 import fr.fms.authentication.Authenticate;
 import fr.fms.business.IBusinessImpl;
 import fr.fms.entities.Formation;
+import fr.fms.entities.User;
 import fr.fms.entities.Category;
 import fr.fms.entities.Customer;
 
@@ -12,6 +13,7 @@ public class ShopApp {
 	private static IBusinessImpl business = new IBusinessImpl();
 	private static Authenticate authenticate = new Authenticate();
 	
+	public static final String TEXT_YELLOW = "\u001B[33m";
 	public static final String TEXT_BLUE = "\u001B[36m";
 	public static final String TEXT_RESET = "\u001B[0m";	
 	private static final String COLUMN_ID = "ID";
@@ -23,6 +25,7 @@ public class ShopApp {
 	
 	private static int idUser = 0;
 	private static String login = null; 
+	private static boolean isAdmin = false;
 	
 
 	public static void main(String[] args) {
@@ -64,7 +67,8 @@ public class ShopApp {
 	 * Méthode qui affiche le menu principale
 	 */
 	public static void displayMenu() {	
-		if(login != null)	System.out.print(TEXT_BLUE + "Compte : " + login);
+		if(isAdmin == true)	System.out.print(TEXT_YELLOW + "Compte ADMINISTRATEUR ");
+		if(login != null && isAdmin == false)	System.out.print(TEXT_BLUE + "Compte : " + login);
 		System.out.println("\n" + "Pour réaliser une action, tapez le code correspondant");
 		System.out.println("1 : Ajouter un article au panier");
 		System.out.println("2 : Retirer un article du panier");
@@ -308,6 +312,7 @@ public class ShopApp {
 	 * si l'utilisateur n'existe pas, il lui est proposé d'en créer un
 	 */
 	private static void connection() {
+		User userCurrent = null;
 		if(login != null) {
 			System.out.println("Souhaitez vous vous déconnecter ? Oui/Non");
 			String response = scan.next();
@@ -315,6 +320,7 @@ public class ShopApp {
 				System.out.println("A bientôt " + login + TEXT_RESET);
 				login = null;
 				idUser = 0;
+				isAdmin = false;
 			}				
 		}
 		else {
@@ -324,12 +330,21 @@ public class ShopApp {
 			String pwd = scan.next();
 			
 			int id = authenticate.existUser(log,pwd);
+			System.out.println("ID :" + id);
 			if(id > 0)	{
 				login = log;
 				idUser = id;
-				System.out.print(TEXT_BLUE);
-			}
-			else {
+				
+				userCurrent = business.readUserById(id);
+				System.out.println("Utilisateur récupérer via l'id: " + userCurrent);
+				
+				if(userCurrent.isAdmin() == false) {
+					System.out.print(TEXT_BLUE);
+				}else {
+					System.out.print(TEXT_YELLOW);
+					isAdmin = true;	
+				}
+			}else {
 				System.out.println("login ou password incorrect");
 				System.out.println("Nouvel utilisateur, pour créer un compte, tapez ok");
 				String ok = scan.next();

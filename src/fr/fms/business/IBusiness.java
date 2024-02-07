@@ -1,6 +1,7 @@
 package fr.fms.business;
 import java.util.ArrayList;
 import fr.fms.entities.Formation;
+import fr.fms.entities.User;
 import fr.fms.entities.Category;
 
 public interface IBusiness {	
@@ -75,4 +76,10 @@ public interface IBusiness {
 	 * @return Liste de formation
 	 */
 	public ArrayList<Formation> readOnsiteFormations();
+	
+	/**
+	 * méthode qui renvoi le User correspondant à l'id
+	 * @return user correspondant si trouvé, null sinon
+	 */
+	public User readUserById(int id);
 }
