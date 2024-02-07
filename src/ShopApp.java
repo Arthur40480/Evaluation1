@@ -459,6 +459,15 @@ public class ShopApp {
 		}
 	}
 	
+	public static void displayCustomerOrders() {
+		System.out.println("Saisissez l'id du client pour lequel vous souhaitez afficher les commandes.");
+		int id = scanInt();
+		if(business.readCustomerById(id) != null) {
+			
+		} else {
+			System.out.println("Le client que vous avez saisi n'existe pas !");
+		}
+	}
 	/**
 	 * Méthode qui passe la commande, l'utilisateur doit être connecté
 	 * si c'est le cas, l'utilisateur sera invité à associé un client à sa commande
