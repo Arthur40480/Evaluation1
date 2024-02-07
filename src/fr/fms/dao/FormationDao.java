@@ -169,6 +169,50 @@ public class FormationDao implements Dao<Formation>{
 		return formations;
 		
 	}
+	
+	public ArrayList<Formation> readAllRemoteFormation() {
+		ArrayList<Formation> formations = new ArrayList<Formation>();
+		String strSql = "SELECT * FROM T_Formations WHERE Remote=true;";
+		try(Statement statement = connection.createStatement()){
+			try(ResultSet resultSet = statement.executeQuery(strSql)){ 			
+				while(resultSet.next()) {
+					int rsId = resultSet.getInt(1);	
+					String rsName = resultSet.getString(2);
+					String rsDescription = resultSet.getString(3);
+					int rsDuration = resultSet.getInt(4);
+					boolean rsRemote = resultSet.getBoolean(5);	
+					double rsUnitaryPrice = resultSet.getDouble(6);
+					int rsIdCategory = resultSet.getInt(7);
+					formations.add((new Formation(rsId, rsName, rsDescription, rsDuration, rsRemote, rsUnitaryPrice, rsIdCategory)));						
+				}	
+			}
+		} catch (SQLException e) {
+			logger.severe("pb sql sur renvoi de toutes les formations d'une catégorie " + e.getMessage());
+		}			
+		return formations;
+	}
+	
+	public ArrayList<Formation> readAllOnsiteFormation() {
+		ArrayList<Formation> formations = new ArrayList<Formation>();
+		String strSql = "SELECT * FROM T_Formations WHERE Remote=false;";
+		try(Statement statement = connection.createStatement()){
+			try(ResultSet resultSet = statement.executeQuery(strSql)){ 			
+				while(resultSet.next()) {
+					int rsId = resultSet.getInt(1);	
+					String rsName = resultSet.getString(2);
+					String rsDescription = resultSet.getString(3);
+					int rsDuration = resultSet.getInt(4);
+					boolean rsRemote = resultSet.getBoolean(5);	
+					double rsUnitaryPrice = resultSet.getDouble(6);
+					int rsIdCategory = resultSet.getInt(7);
+					formations.add((new Formation(rsId, rsName, rsDescription, rsDuration, rsRemote, rsUnitaryPrice, rsIdCategory)));						
+				}	
+			}
+		} catch (SQLException e) {
+			logger.severe("pb sql sur renvoi de toutes les formations d'une catégorie " + e.getMessage());
+		}			
+		return formations;
+	}
 
 }
 
