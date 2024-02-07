@@ -67,7 +67,7 @@ CREATE TABLE T_Formations (
 	Remote				BOOLEAN			NOT NULL,
 	UnitaryPrice		FLOAT(8)		NOT NULL,
 	IdCategory			INT(4)			NOT NULL,
-	FOREIGN KEY (IdCategory)			REFERENCES T_Categories(IdCategory)
+	FOREIGN KEY (IdCategory)			REFERENCES T_Categories(IdCategory)		ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 INSERT INTO T_Formations ( Name, Description, Duration, Remote, UnitaryPrice, IdCategory ) VALUES ( 'Développement Web Full Stack', 'Formation complète sur le développement web, couvrant à la fois frontend et backend', 30, true, 1000, 1);
