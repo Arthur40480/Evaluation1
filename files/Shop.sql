@@ -5,6 +5,12 @@ DROP DATABASE IF EXISTS Shop;
 CREATE DATABASE Shop;
 Use Shop;
 
+-- ---------------------------------------------------------------------
+-- - Création d'un nouvel utilisateur pour la base de donnée Shop - --
+-- ---------------------------------------------------------------------
+-- CREATE USER 'invite'@'localhost' IDENTIFIED BY 'azertyuiop';
+-- GRANT ALL PRIVILEGES ON Shop.* TO 'invite'@'localhost';
+-- FLUSH PRIVILEGES;
 
 -- -----------------------------------------------------------------------------
 -- - Construction de la table des utilisateurs                               ---
