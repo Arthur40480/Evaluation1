@@ -160,7 +160,7 @@ public class ShopApp {
 	}
 	
 	/**
-	 * Méthode qui affiche toutes les formations en distanciel
+	 * Méthode qui affiche toutes les formations en présentiel
 	 */
 	public static void displayOnsiteFormations() {
 	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
@@ -242,7 +242,6 @@ public class ShopApp {
 			}
 		}
 	}
-	
 	
 	/**
 	 * Méthode qui passe la commande, l'utilisateur doit être connecté

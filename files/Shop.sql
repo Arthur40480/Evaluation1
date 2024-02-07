@@ -96,14 +96,11 @@ CREATE TABLE T_Orders (
 -- - Construction de la table des items de commande - --
 -- ---------------------------------------------------------------------
 CREATE TABLE T_Order_Items (
-	IdOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,
-	
-	IdArticle           INT(4)   NOT NULL,
-	FOREIGN KEY(IdArticle) REFERENCES T_Articles(IdArticle),
-	
+	IdOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,	
+	IdFormation           INT(4)   NOT NULL,
+	FOREIGN KEY(IdFormation) REFERENCES T_Formations(IdFormation),	
 	Quantity			FLOAT(4) NOT NULL DEFAULT 1,
-	UnitaryPrice		FLOAT(4)	NOT NULL DEFAULT 0,
-	
+	UnitaryPrice		FLOAT(4)	NOT NULL DEFAULT 0,	
 	IdOrder             INT(4)   NOT NULL,
 	FOREIGN KEY(IdOrder) REFERENCES T_Orders(IdOrder)
 ) ENGINE = InnoDB;
