@@ -15,10 +15,11 @@ public class UserDao implements Dao<User> {
 	 */
 	@Override
 	public boolean create(User obj) {
-		String str = "INSERT INTO T_Users (Login,Password) VALUES (?,?);";
+		String str = "INSERT INTO T_Users (Login,Password) VALUES (?,?,?);";
 		try (PreparedStatement ps = connection.prepareStatement(str)){
 				ps.setString(1, obj.getLogin());
-				ps.setString(2, obj.getPassword());			
+				ps.setString(2, obj.getPassword());
+				ps.setBoolean(3, obj.isAdmin());
 				if( ps.executeUpdate() == 1)	return true;				
 		} catch (SQLException e) {
 			logger.severe("pb sql sur la création d'un utilisateur ");
@@ -37,7 +38,7 @@ public class UserDao implements Dao<User> {
 				String str = "SELECT * FROM T_Users where IdUser=" + id + ";";									
 				ResultSet rs = statement.executeQuery(str);
 				if(rs.next()) 
-					return new User(rs.getInt(1) , rs.getString(2) , rs.getString(3));
+					return new User(rs.getInt(1) , rs.getString(2) , rs.getString(3), rs.getBoolean(4));
 		} catch (SQLException e) {
 			logger.severe("pb sql sur la lecture d'un user " + e.getMessage());
 		} 	
@@ -90,8 +91,9 @@ public class UserDao implements Dao<User> {
 				while(resultSet.next()) {
 					int rsId = resultSet.getInt(1);	
 					String rsLogin = resultSet.getString(2);
-					String rsPassword = resultSet.getString(3);							
-					users.add((new User(rsId,rsLogin,rsPassword)));						
+					String rsPassword = resultSet.getString(3);
+					boolean rsAdmin = resultSet.getBoolean(4);
+					users.add((new User(rsId,rsLogin,rsPassword,rsAdmin)));						
 				}	
 			}
 		} catch (SQLException e) {
@@ -113,7 +115,7 @@ public class UserDao implements Dao<User> {
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) 
-				return new User(rs.getInt(1) , rs.getString(2) , rs.getString(3));
+				return new User(rs.getInt(1) , rs.getString(2) , rs.getString(3), rs.getBoolean(4));
 		} catch (SQLException e) {
 			logger.severe("pb sql sur renvoi d'un utilisateur à partir des credentials ");
 		} 	
@@ -131,7 +133,7 @@ public class UserDao implements Dao<User> {
 			ps.setString(1, login);									
 			try (ResultSet rs = ps.executeQuery()){
 				if(rs.next()) 
-					return new User(rs.getInt(1) , rs.getString(2) , rs.getString(3));
+					return new User(rs.getInt(1) , rs.getString(2) , rs.getString(3), rs.getBoolean(4));
 				}
 		} catch (SQLException e) {
 			logger.severe("pb sql sur renvoi d'un utilisateur à partir de son login ");
