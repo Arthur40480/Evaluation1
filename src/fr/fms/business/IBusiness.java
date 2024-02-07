@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import fr.fms.entities.Formation;
 import fr.fms.entities.User;
 import fr.fms.entities.Category;
+import fr.fms.entities.Customer;
 
 public interface IBusiness {	
 	/**
@@ -100,9 +101,17 @@ public interface IBusiness {
 	
 	/**
 	 * méthode qui renvoi le User correspondant à l'id
+	 * @param id
 	 * @return user correspondant si trouvé, null sinon
 	 */
 	public User readUserById(int id);
+	
+	/**
+	 * méthode qui renvoi le Customer correspondant à l'id
+	 * @param id
+	 * @return customer concerné
+	 */
+	public Customer readCustomerById(int id);
 	
 	/**
 	 * méthode qui permet de créer une catégorie en base

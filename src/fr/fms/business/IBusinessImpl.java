@@ -5,6 +5,7 @@ import java.util.HashMap;
 import fr.fms.dao.FormationDao;
 import fr.fms.dao.UserDao;
 import fr.fms.dao.CategoryDao;
+import fr.fms.dao.CustomerDao;
 import fr.fms.dao.Dao;
 import fr.fms.dao.DaoFactory;
 import fr.fms.entities.Formation;
@@ -86,11 +87,6 @@ public class IBusinessImpl implements IBusiness {
 	}
 	
 	@Override
-	public ArrayList<Category> readCategories() {
-		return categoryDao.readAll();
-	}
-
-	@Override
 	public Formation readOneArticle(int id) {
 		return formationDao.read(id);
 	}
@@ -121,6 +117,11 @@ public class IBusinessImpl implements IBusiness {
 	}
 	
 	@Override
+	public Customer readCustomerById(int id) {
+		return ((CustomerDao) customerDao).read(id);
+	}
+	
+	@Override
 	public boolean createCategory(Category category) {
 		return ((CategoryDao) categoryDao).create(category);
 	}
@@ -138,6 +139,11 @@ public class IBusinessImpl implements IBusiness {
 	@Override
 	public boolean deleteCategory(Category category) {
 		return ((CategoryDao) categoryDao).delete(category);
+	}
+	
+	@Override
+	public ArrayList<Category> readCategories() {
+		return categoryDao.readAll();
 	}
 
 	public double getTotal() {
