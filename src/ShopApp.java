@@ -30,19 +30,19 @@ public class ShopApp {
 
 	public static void main(String[] args) {
 		System.out.println("Bonjour et bienvenu dans ma boutique, voici la liste d'articles en stock\n");
-		displayArticles();
+		displayFormations();
 		int choice = 0;
 		while(choice != 11) {
 			displayMenu();
 			choice = scanInt();
 			switch(choice) {
-				case 1 : addArticle();				
+				case 1 : addFormationToCart();				
 					break;					
-				case 2 : removeArticle();
+				case 2 : removeFormationToCart();
 					break;					
 				case 3 : displayCart(true);
 					break;					
-				case 4 : displayArticles();
+				case 4 : displayFormations();
 					break;
 				case 5 : displayRemoteFormations();
 					break;
@@ -52,7 +52,7 @@ public class ShopApp {
 					break;
 				case 8 : displayCategories();
 					break;
-				case 9 : displayArticlesByCategoryId();
+				case 9 : displayFormationsByCategoryId();
 					break;
 				case 10 : connection();
 					break;
@@ -198,7 +198,7 @@ public class ShopApp {
 		System.out.println("Selectionner l'id de la formation à mettre à jour");
 		int id = scanInt();
 		scan.nextLine();
-		if(business.readOneArticle(id) != null) {
+		if(business.readOneFormation(id) != null) {
 			System.out.println("Saisissez le nom de la formation (50 caractère max)");
 			String catName = scan.nextLine();
 			System.out.println("Saisissez la description de la formation (100 caractère max)");
@@ -235,8 +235,8 @@ public class ShopApp {
 	public static void adminDeleteFormation() {
 		System.out.println("Selectionner l'id de la formation à supprimer");
 		int id = scanInt();
-		if(business.readOneArticle(id) != null) {			
-			if(business.deleteFormation(business.readOneArticle(id))) {
+		if(business.readOneFormation(id) != null) {			
+			if(business.deleteFormation(business.readOneFormation(id))) {
 				System.out.println("Suppression de la formation ok !");	
 			}
 		}else {
@@ -247,15 +247,14 @@ public class ShopApp {
 	/**
 	 * Méthode qui affiche tous les articles en base en centrant le texte 
 	 */
-	public static void displayArticles() { 		
+	public static void displayFormations() { 		
 	    String header = String.format("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |",
                 "ID", "Name", "Description", "Duration", "Remote", "Price");
-	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
-	    		+ "--------------------+----------+--------+---------+";
+	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+";
 	    System.out.println(separator);
 	    System.out.println(header);
 	    System.out.println(separator);
-	    business.readArticles().forEach(article -> {
+	    business.readFormations().forEach(article -> {
 	    	System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n",
        article.getId(), article.getName(), article.getDescription(),
        article.getDuration() + "jours", article.isRemote(), article.getUnitaryPrice() + "€");
@@ -266,12 +265,11 @@ public class ShopApp {
 	/**
 	 * Méthode qui affiche tous les articles par catégorie en utilisant printf
 	 */
-	private static void displayArticlesByCategoryId() {
+	private static void displayFormationsByCategoryId() {
 		System.out.println("saisissez l'id de la catégorie concerné");
 		int id = scanInt();
 		Category category = business.readOneCategory(id);
-	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
-	    		+ "--------------------+----------+--------+---------+";
+	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+";
 		if(category != null) {
 			System.out.println();
 			System.out.printf("                                                                 AFFICHAGE PAR CATEGORIE    %n");
@@ -279,7 +277,7 @@ public class ShopApp {
 			System.out.println(separator);
 			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
 			System.out.println(separator);
-			business.readArticlesByCatId(id).forEach( f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n",f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice() + "€"));
+			business.readFormationsByCatId(id).forEach( f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n",f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice() + "€"));
 			System.out.println(separator);
 		}
 		else System.out.println("cette catégorie n'existe pas !");
@@ -289,8 +287,7 @@ public class ShopApp {
 	 * Méthode qui affiche toutes les formations suivant un mot-clé
 	 */
 	public static void displayFormationsByKeyword() {
-	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
-	    		+ "--------------------+----------+--------+---------+";
+	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+";
 		System.out.println("saisissez un mot clé");
 		String keyword = scan.next();
 		ArrayList<Formation> formationList = business.readFormationsByKeyword(keyword);
@@ -309,8 +306,7 @@ public class ShopApp {
 	 * Méthode qui affiche toutes les formations en distanciel
 	 */
 	public static void displayRemoteFormations() {
-	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
-	    		+ "--------------------+----------+---------+";
+	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+---------+";
 		ArrayList<Formation> formationList = business.readRemoteFormations();
 		if(formationList.size() == 0) {
 			System.out.println("Aucune formation en distanciel pour le moment");
@@ -328,8 +324,7 @@ public class ShopApp {
 	 * Méthode qui affiche toutes les formations en présentiel
 	 */
 	public static void displayOnsiteFormations() {
-	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
-	    		+ "--------------------+----------+---------+";
+	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+---------+";
 		ArrayList<Formation> formationList = business.readOnsiteFormations();
 		if(formationList.size() == 0) {
 			System.out.println("Aucune formation en présentiel pour le moment");
@@ -412,7 +407,7 @@ public class ShopApp {
 	/**
 	 * Méthode qui supprime un article du panier
 	 */
-	public static void removeArticle() {
+	public static void removeFormationToCart() {
 		System.out.println("Selectionner l'id de l'article à supprimer du panier");
 		int id = scanInt();
 		business.rmFromCart(id);
@@ -422,10 +417,10 @@ public class ShopApp {
 	/**
 	 * Méthode qui ajoute un article au panier
 	 */
-	public static void addArticle() {
+	public static void addFormationToCart() {
 		System.out.println("Selectionner l'id de l'article à ajouter au panier");
 		int id = scanInt();
-		Formation formation = business.readOneArticle(id);
+		Formation formation = business.readOneFormation(id);
 		if(formation != null) {
 			business.addToCart(formation);
 			displayCart(false);
@@ -442,8 +437,7 @@ public class ShopApp {
 			System.out.println("CONTENU DU PANIER :");
 		    String header = String.format("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s | %-6s |",
 	                "ID", "Name", "Description", "Duration", "Remote", "Price", "Quantity");
-		    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
-		    		+ "--------------------+----------+--------+---------+----------+";
+		    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+----------+";
 		    System.out.println(separator);
 		    System.out.println(header);
 		    System.out.println(separator);

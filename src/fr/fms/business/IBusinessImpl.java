@@ -83,17 +83,17 @@ public class IBusinessImpl implements IBusiness {
 	}
 	
 	@Override
-	public ArrayList<Formation> readArticles() {
+	public ArrayList<Formation> readFormations() {
 		return formationDao.readAll();
 	}
 	
 	@Override
-	public Formation readOneArticle(int id) {
+	public Formation readOneFormation(int id) {
 		return formationDao.read(id);
 	}
 
 	@Override
-	public ArrayList<Formation> readArticlesByCatId(int id) {
+	public ArrayList<Formation> readFormationsByCatId(int id) {
 		return ((FormationDao) formationDao).readAllByCat(id);
 	}
 	

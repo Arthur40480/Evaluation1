@@ -59,14 +59,14 @@ public interface IBusiness {
 	 * méthode qui renvoi toutes les formations de la table t_formations en bdd
 	 * @return Liste de formations en base
 	 */
-	public ArrayList<Formation> readArticles();	
+	public ArrayList<Formation> readFormations();	
 	
 	/**
 	 * méthode renvoie la formation correspondante à l'id
 	 * @param id de la formation à renvoyer
 	 * @return formation correspondante si trouvé, null sinon
 	 */
-	public Formation readOneArticle(int id);	
+	public Formation readOneFormation(int id);	
 	
 	/**
 	 * méthode qui renvoi toutes les catégories de la table t_catégories en bdd
@@ -79,7 +79,7 @@ public interface IBusiness {
 	 * @param id de la catégorie
 	 * @return Liste de formation
 	 */
-	public ArrayList<Formation> readArticlesByCatId(int idCat);
+	public ArrayList<Formation> readFormationsByCatId(int idCat);
 	
 	/**
 	 * méthode qui renvoi toutes les formations qui contiennent un mot-clé

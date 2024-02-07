@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-import fr.fms.entities.Formation;
 import fr.fms.entities.Order;
 
 public class OrderDao implements Dao<Order> {
