@@ -95,6 +95,7 @@ public class ShopApp {
 			System.out.println();
 			System.out.println("------- OPTIONS ADMINISTRATEUR -------");
 			System.out.println("12 : Gérer les catégories");
+			System.out.println("13 : Gérer les formations");
 		}
 	}
 	
@@ -279,8 +280,12 @@ public class ShopApp {
 		System.out.println("Selectionner l'id de la catégorie à supprimer");
 		int id = scanInt();
 		if(business.readCategory(id) != null) {
-			if(business.deleteCategory(business.readCategory(id))) {
-				System.out.println("Suppression de la catégorie ok !");
+			System.out.println("Attention, la suppression de cette catégorie entraînera la suppression de toutes les formations liées à celle-ci !");
+			System.out.println("Souhaitez vous la supprimer quand même ? Oui/Non :");
+			if(scan.next().equalsIgnoreCase("Oui")) {
+				if(business.deleteCategory(business.readCategory(id))) {
+					System.out.println("Suppression de la catégorie ok !");
+				}
 			}
 		}else {
 			System.out.println("la catégorie que vous souhaitez supprimer n'existe pas, pb de saisi id");

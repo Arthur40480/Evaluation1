@@ -64,7 +64,22 @@ public class IBusinessImpl implements IBusiness {
 		}
 		return 0;
 	}
-
+	
+	@Override
+	public boolean createFormation(Formation formation) {
+		return ((FormationDao) formationDao).create(formation);
+	}
+	
+	@Override
+	public boolean updateFormation(Formation formation) {
+		return ((FormationDao) formationDao).update(formation);
+	}
+	
+	@Override
+	public boolean deleteFormation(Formation formation) {
+		return ((FormationDao) formationDao).delete(formation);
+	}
+	
 	@Override
 	public ArrayList<Formation> readArticles() {
 		return formationDao.readAll();

@@ -33,6 +33,27 @@ public interface IBusiness {
 	public int order(int idUser);		
 	
 	/**
+	 * méthode qui permet de créer une formation en base
+	 * @param formation concernée
+	 * @return true si ok, sinon false
+	 */
+	public boolean createFormation(Formation formation);
+	
+	/**
+	 * Méthode qui permet de mettre à jour une formation
+	 * @param formation concernée
+	 * @return true si ok, sinon false
+	 */
+	public boolean updateFormation(Formation formation);
+	
+	/**
+	 * Méthode qui permet de supprimer une formation
+	 * @param formation concernée
+	 * @return true si ok, sinon false
+	 */
+	public boolean deleteFormation(Formation formation);
+	
+	/**
 	 * méthode qui renvoi toutes les formations de la table t_formations en bdd
 	 * @return Liste de formations en base
 	 */
@@ -84,7 +105,7 @@ public interface IBusiness {
 	public User readUserById(int id);
 	
 	/**
-	 * méthode qui de créer une catégorie en base
+	 * méthode qui permet de créer une catégorie en base
 	 * @param category concernée
 	 * @return true si ok, sinon false
 	 */
