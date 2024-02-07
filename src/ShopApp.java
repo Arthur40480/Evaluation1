@@ -41,17 +41,19 @@ public class ShopApp {
 					break;					
 				case 4 : displayArticles();
 					break;
-				case 5 : displayFormationsByKeyword();
+				case 5 : displayRemoteFormations();
 					break;
-				case 6 : displayCategories();
+				case 6 : displayFormationsByKeyword();
 					break;
-				case 7 : displayArticlesByCategoryId();
+				case 7 : displayCategories();
 					break;
-				case 8 : connection();
+				case 8 : displayArticlesByCategoryId();
 					break;
-				case 9 : System.out.println("à bientôt dans notre boutique :)");
+				case 9 : connection();
+					break;
+				case 10 : System.out.println("à bientôt dans notre boutique :)");
 					break;					
-				default : System.out.println("veuillez saisir une valeur entre 1 et 9");
+				default : System.out.println("veuillez saisir une valeur entre 1 et 10");
 			}
 		}
 	}
@@ -66,11 +68,12 @@ public class ShopApp {
 		System.out.println("2 : Retirer un article du panier");
 		System.out.println("3 : Afficher mon panier + total pour passer commande");
 		System.out.println("4 : Afficher tous les articles en stock");
-		System.out.println("5 : Rechercher un article via un mot-clé");
-		System.out.println("6 : Afficher toutes les catégories en base");
-		System.out.println("7 : Afficher tous les articles d'une catégorie");
-		System.out.println("8 : Connexion(Deconnexion) à votre compte");
-		System.out.println("9 : sortir de l'application");
+		System.out.println("5 : Afficher toutes les formations en distanciel");
+		System.out.println("6 : Rechercher un article via un mot-clé");
+		System.out.println("7 : Afficher toutes les catégories en base");
+		System.out.println("8 : Afficher tous les articles d'une catégorie");
+		System.out.println("9 : Connexion(Deconnexion) à votre compte");
+		System.out.println("10 : sortir de l'application");
 	}
 	
 	/**
@@ -114,6 +117,9 @@ public class ShopApp {
 		else System.out.println("cette catégorie n'existe pas !");
 	}
 	
+	/**
+	 * Méthode qui affiche toutes les formations suivant un mot-clé
+	 */
 	public static void displayFormationsByKeyword() {
 	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
 	    		+ "--------------------+----------+--------+--------+";
@@ -127,6 +133,25 @@ public class ShopApp {
 			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
 			System.out.println(separator);
 			formationList.forEach(f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s |%n", f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice()));
+			System.out.println(separator);
+		}
+	}
+	
+	/**
+	 * Méthode qui affiche toutes les formations en distanciel
+	 */
+	public static void displayRemoteFormations() {
+	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
+	    		+ "--------------------+----------+--------+";
+		ArrayList<Formation> formationList = business.readRemoteFormations();
+		if(formationList.size() == 0) {
+			System.out.println("Aucune formation n'a été trouvée");
+		} else {
+			System.out.printf("                                                                 FORMATION EN DISTANCIEL    %n");
+			System.out.println(separator);
+			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_PRICE);
+			System.out.println(separator);
+			formationList.forEach(f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s |%n", f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.getUnitaryPrice()));
 			System.out.println(separator);
 		}
 	}
