@@ -13,6 +13,7 @@ public class FormationDao implements Dao<Formation>{
 	/**
 	 * Méthode qui crée un article en base sans prendre en compte l'id (généré automatiquement)
 	 * @param Formation à ajouter dans la table des formations
+	 * @return true si ok, sinon false
 	 */
 	@Override
 	public boolean create(Formation obj) {
@@ -32,7 +33,7 @@ public class FormationDao implements Dao<Formation>{
 	}
 	
 	/**
-	 * Méthode qui renvoi toutes les infos d'une formation à partir de son id s'il existe dans la table T_Formations
+	 * Méthode qui renvoi toutes les infos d'une formation à partir de son id si elle existe dans la table T_Formations
 	 * @param id de la formation 
 	 * @return formation si trouvé, null sinon
 	 */
@@ -51,7 +52,7 @@ public class FormationDao implements Dao<Formation>{
 	/**
 	 * Méthode qui met à jour une formation si elle existe (à partir de son id) dans la table T_Formations
 	 * @param formation concerné
-	 * @return vrai si trouvé, faux sinon
+	 * @return true si ok, sinon false
 	 */
 	@Override
 	public boolean update(Formation obj) {
@@ -74,7 +75,7 @@ public class FormationDao implements Dao<Formation>{
 	/**
 	 * Méthode qui supprime une formation à partir de son id (s'il existe) dans la table T_Formations
 	 * @param formation concerné
-	 * @return vrai si suppression ok faux sinon
+	 * @return true si ok, sinon false
 	 */
 	@Override
 	public boolean delete(Formation obj) {
@@ -170,6 +171,10 @@ public class FormationDao implements Dao<Formation>{
 		
 	}
 	
+	/**
+	 * Méthode qui renvoi toute les formations qui sont en distanciel
+	 * @return liste de formation
+	 */
 	public ArrayList<Formation> readAllRemoteFormation() {
 		ArrayList<Formation> formations = new ArrayList<Formation>();
 		String strSql = "SELECT * FROM T_Formations WHERE Remote=true;";
@@ -192,6 +197,10 @@ public class FormationDao implements Dao<Formation>{
 		return formations;
 	}
 	
+	/**
+	 * Méthode qui renvoi toute les formations qui sont en présentiel
+	 * @return liste de formation
+	 */
 	public ArrayList<Formation> readAllOnsiteFormation() {
 		ArrayList<Formation> formations = new ArrayList<Formation>();
 		String strSql = "SELECT * FROM T_Formations WHERE Remote=false;";
