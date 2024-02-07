@@ -63,7 +63,9 @@ public class ShopApp {
 						switch(choice) {
 						case 12 : displayCategoryMenu();
 							break;
-						default : System.out.println("veuillez saisir une valeur entre 1 et 12");
+						case 13 : displayFormationsMenu();
+							break;
+						default : System.out.println("veuillez saisir une valeur entre 1 et 13");
 						}
 					}else {
 						System.out.println("veuillez saisir une valeur entre 1 et 11");
@@ -128,6 +130,118 @@ public class ShopApp {
 	}
 	
 	/**
+	 * Méthode qui affiche le menu des formations si admin
+	 */
+	public static void displayFormationsMenu() {
+		int choice = 0;
+		while(choice != 4) {
+			System.out.println("\n" + "Pour réaliser une action, tapez le code correspondant");
+			System.out.println("1: Ajouter une formation");
+			System.out.println("2: Mettre à jour une formation");
+			System.out.println("3: Supprimer une formation");
+			System.out.println("4: Menu Principale");
+			choice = scanInt();
+			scan.nextLine();
+			
+			switch(choice) {
+				case 1: adminCreateFormation();
+					break;
+				case 2: adminUpdateFormation();
+					break;
+				case 3: adminDeleteFormation();
+					break;
+				case 4: 
+					break;
+				default : System.out.println("veuillez saisir une valeur entre 1 et 4");
+			}
+		}
+	}
+	
+	/**
+	 * Méthode qui créer une formation
+	 */
+	public static void adminCreateFormation() {
+		System.out.println("Saisissez le nom de la formation (50 caractère max)");
+		String catName = scan.nextLine();
+		System.out.println("Saisissez la description de la formation (100 caractère max)");
+		String description = scan.nextLine();
+		System.out.println("Saisissez la durée (En jours) de la formation");
+		int duration = scanInt();
+		System.out.println("En remote ? Oui/Non");
+		boolean remote;
+		if(scan.next().equalsIgnoreCase("Oui")) {
+			remote = true;
+		}else {
+			remote = false;
+		}
+		System.out.println("Saisissez le prix (En €) de la formation");
+		double price = scan.nextDouble();
+		System.out.println("Saisissez l'id de la catégorie à laquelle appartient la formation");
+		int idCategory = scanInt();
+		if(business.readCategory(idCategory) != null) {
+			Formation newFormation = new Formation(catName, description, duration, remote, price, idCategory);
+			if(business.createFormation(newFormation)) {
+				System.out.println("Ajout de la formation ok !");
+			}
+		}else {
+			System.out.println("l'id de la catégorie que vous avez saisie n'existe pas !");
+		}
+	}
+	
+	/**
+	 * Méthode qui modifie une formation
+	 */
+	public static void adminUpdateFormation() {
+		System.out.println("Selectionner l'id de la formation à mettre à jour");
+		int id = scanInt();
+		scan.nextLine();
+		if(business.readOneArticle(id) != null) {
+			System.out.println("Saisissez le nom de la formation (50 caractère max)");
+			String catName = scan.nextLine();
+			System.out.println("Saisissez la description de la formation (100 caractère max)");
+			String description = scan.nextLine();
+			System.out.println("Saisissez la durée (En jours) de la formation");
+			int duration = scanInt();
+			System.out.println("En remote ? Oui/Non");
+			boolean remote;
+			if(scan.next().equalsIgnoreCase("Oui")) {
+				remote = true;
+			}else {
+				remote = false;
+			}
+			System.out.println("Saisissez le prix (En €) de la formation");
+			double price = scan.nextDouble();
+			System.out.println("Saisissez l'id de la catégorie à laquelle appartient la formation");
+			int idCategory = scanInt();
+			if(business.readCategory(idCategory) != null) {
+				Formation newFormation = new Formation(id, catName, description, duration, remote, price, idCategory);
+				if(business.updateFormation(newFormation)) {
+					System.out.println("Mise à jour de la formation ok !");
+				}
+			} else{
+				System.out.println("l'id de la catégorie que vous avez saisie n'existe pas !");
+			}
+		}else {
+			System.out.println("la formation que vous souhaitez mettre à jour n'existe pas, pb de saisi id");
+		}
+	}
+	
+	/**
+	 * Méthode qui supprime une formation
+	 */
+	public static void adminDeleteFormation() {
+		System.out.println("Selectionner l'id de la formation à supprimer");
+		int id = scanInt();
+		if(business.readOneArticle(id) != null) {			
+			if(business.deleteFormation(business.readOneArticle(id))) {
+				System.out.println("Suppression de la formation ok !");	
+			}
+		}else {
+			System.out.println("la catégorie que vous souhaitez supprimer n'existe pas, pb de saisi id");
+		}
+	}
+	
+	/**
 	 * Méthode qui affiche tous les articles en base en centrant le texte 
 	 */
 	public static void displayArticles() { 		
@@ -154,15 +268,15 @@ public class ShopApp {
 		int id = scanInt();
 		Category category = business.readOneCategory(id);
 	    String separator = "+------+------------------------------------------+-------------------------------------------------------------------"
-	    		+ "--------------------+----------+--------+--------+";
+	    		+ "--------------------+----------+--------+---------+";
 		if(category != null) {
 			System.out.println();
 			System.out.printf("                                                                 AFFICHAGE PAR CATEGORIE    %n");
 			System.out.printf("                                                                        %-10s               %n",category.getName());
 			System.out.println(separator);
-			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
+			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
 			System.out.println(separator);
-			business.readArticlesByCatId(id).forEach( f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-6s |%n",f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice() + "€"));
+			business.readArticlesByCatId(id).forEach( f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n",f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice() + "€"));
 			System.out.println(separator);
 		}
 		else System.out.println("cette catégorie n'existe pas !");
