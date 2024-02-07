@@ -12,7 +12,7 @@ public class CategoryDao implements Dao<Category> {
 	
 	/**
 	 * Méthode qui crée une catégorie en base sans prendre en compte l'id (généré automatiquement)
-	 * @param categorie à ajouter dans la table des catégories
+	 * @param obj categorie à ajouter dans la table des catégories
 	 */
 	@Override
 	public boolean create(Category obj) {
@@ -46,7 +46,7 @@ public class CategoryDao implements Dao<Category> {
 	
 	/**
 	 * Méthode qui met à jour une catégorie si elle existe (à partir de son id) dans la table T_Categories
-	 * @param Categorie concerné
+	 * @param obj categorie concernée
 	 * @return vrai si trouvé, faux sinon
 	 */
 	@Override
@@ -65,7 +65,7 @@ public class CategoryDao implements Dao<Category> {
 	
 	/**
 	 * Méthode qui supprime une catégorie à partir de son id (s'il existe) dans la table T_Categories
-	 * @param categorie concerné
+	 * @param obj catégorie concernée
 	 * @return vrai si suppression ok faux sinon
 	 */
 	@Override

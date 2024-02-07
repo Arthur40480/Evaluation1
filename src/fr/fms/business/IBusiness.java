@@ -82,4 +82,24 @@ public interface IBusiness {
 	 * @return user correspondant si trouvé, null sinon
 	 */
 	public User readUserById(int id);
+	
+	/**
+	 * méthode qui de créer une catégorie en base
+	 * @param category concernée
+	 */
+	public void createCategory(Category category);
+	
+	/**
+	 * Méthode qui permet de mettre à jour une catégorie
+	 * @param category concernée
+	 * @return true si ok, sinon false
+	 */
+	public boolean updateCategory(Category category);
+	
+	/**
+	 * Méthode qui permet de supprimer une catégorie
+	 * @param category concernée
+	 * @return true si ok, sinon false
+	 */
+	public boolean deleteCategory(Category category);
 }

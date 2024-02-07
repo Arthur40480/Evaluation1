@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import fr.fms.dao.FormationDao;
 import fr.fms.dao.UserDao;
+import fr.fms.dao.CategoryDao;
 import fr.fms.dao.Dao;
 import fr.fms.dao.DaoFactory;
 import fr.fms.entities.Formation;
@@ -102,6 +103,21 @@ public class IBusinessImpl implements IBusiness {
 	@Override 
 	public User readUserById(int id) {
 		return ((UserDao) userDao).read(id);
+	}
+	
+	@Override
+	public void createCategory(Category category) {
+		categoryDao.create(category);
+	}
+	
+	@Override
+	public boolean updateCategory(Category category) {
+		return ((CategoryDao) categoryDao).update(category);
+	}
+	
+	@Override
+	public boolean deleteCategory(Category category) {
+		return ((CategoryDao) categoryDao).delete(category);
 	}
 
 	public double getTotal() {
