@@ -4,20 +4,23 @@ public class User {
 	private int id;
 	private String login;
 	private String password;
+	private boolean admin;
 	
-	public User(int id, String login, String password) {
+	public User(int id, String login, String password, boolean admin) {
 		this.id = id;
 		this.login = login;
 		this.password = password;
+		this.admin = admin;
 	}
-	public User(String login, String password) {
+	public User(String login, String password, boolean admin) {
 		this.login = login;
 		this.password = password;
+		this.admin = admin;
 	}
 	
 	@Override
 	public String toString() {
-		return "[User - Id: " + getId() + "   Login: " + getLogin() + "   Password: " + getPassword() + "]";
+		return "[User - Id: " + getId() + "   Login: " + getLogin() + "   Password: " + getPassword() + "   Admin: " + isAdmin() + "]";
 	}
 	
 	public int getId() {
@@ -42,5 +45,13 @@ public class User {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public boolean isAdmin() {
+		return admin;
+	}
+	
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 }
