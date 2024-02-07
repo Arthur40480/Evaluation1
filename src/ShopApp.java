@@ -350,7 +350,7 @@ public class ShopApp {
 		if(id == 0) { 
 			System.out.println("saisissez votre password :");
 			String password = scan.next();
-			authenticate.addUser(login,password);		
+			authenticate.addUser(login,password, false);		
 			System.out.println("Ne perdez pas ces infos de connexion...");
 			stop(2);
 			System.out.println("création de l'utilisateur terminé, merci de vous connecter");
