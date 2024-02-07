@@ -106,8 +106,13 @@ public class IBusinessImpl implements IBusiness {
 	}
 	
 	@Override
-	public void createCategory(Category category) {
-		categoryDao.create(category);
+	public boolean createCategory(Category category) {
+		return ((CategoryDao) categoryDao).create(category);
+	}
+	
+	@Override
+	public Category readCategory(int id) {
+		return ((CategoryDao) categoryDao).read(id);
 	}
 	
 	@Override

@@ -86,8 +86,16 @@ public interface IBusiness {
 	/**
 	 * méthode qui de créer une catégorie en base
 	 * @param category concernée
+	 * @return true si ok, sinon false
 	 */
-	public void createCategory(Category category);
+	public boolean createCategory(Category category);
+	
+	/**
+	 * méthode renvoie la catégorie correspondante à l'id
+	 * @param category concernée
+	 * @return true si ok, sinon false
+	 */
+	public Category readCategory(int id);
 	
 	/**
 	 * Méthode qui permet de mettre à jour une catégorie

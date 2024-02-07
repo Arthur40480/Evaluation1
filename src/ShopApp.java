@@ -32,7 +32,7 @@ public class ShopApp {
 		System.out.println("Bonjour et bienvenu dans ma boutique, voici la liste d'articles en stock\n");
 		displayArticles();
 		int choice = 0;
-		while(choice != 9) {
+		while(choice != 11) {
 			displayMenu();
 			choice = scanInt();
 			switch(choice) {
@@ -58,7 +58,16 @@ public class ShopApp {
 					break;
 				case 11 : System.out.println("à bientôt dans notre boutique :)");
 					break;					
-				default : System.out.println("veuillez saisir une valeur entre 1 et 11");
+				default : 
+					if(isAdmin) {
+						switch(choice) {
+						case 12 : displayCategoryMenu();
+							break;
+						default : System.out.println("veuillez saisir une valeur entre 1 et 12");
+						}
+					}else {
+						System.out.println("veuillez saisir une valeur entre 1 et 11");
+					}
 			}
 		}
 	}
@@ -67,7 +76,8 @@ public class ShopApp {
 	 * Méthode qui affiche le menu principale
 	 */
 	public static void displayMenu() {	
-		if(isAdmin == true)	System.out.print(TEXT_YELLOW + "Compte ADMINISTRATEUR ");
+		System.out.println();
+		if(isAdmin)	System.out.print(TEXT_YELLOW + "Compte ADMINISTRATEUR ");
 		if(login != null && isAdmin == false)	System.out.print(TEXT_BLUE + "Compte : " + login);
 		System.out.println("\n" + "Pour réaliser une action, tapez le code correspondant");
 		System.out.println("1 : Ajouter un article au panier");
@@ -81,6 +91,39 @@ public class ShopApp {
 		System.out.println("9 : Afficher tous les articles d'une catégorie");
 		System.out.println("10 : Connexion(Deconnexion) à votre compte");
 		System.out.println("11 : Sortir de l'application");
+		if(isAdmin) {
+			System.out.println();
+			System.out.println("------- OPTIONS ADMINISTRATEUR -------");
+			System.out.println("12 : Gérer les catégories");
+		}
+	}
+	
+	/**
+	 * Méthode qui affiche le menu des catégories si admin
+	 */
+	public static void displayCategoryMenu() {
+		int choice = 0;
+		while(choice != 4) {
+			System.out.println("\n" + "Pour réaliser une action, tapez le code correspondant");
+			System.out.println("1: Ajouter une catégorie");
+			System.out.println("2: Mettre à jour une catégorie");
+			System.out.println("3: Supprimer une catégorie");
+			System.out.println("4: Menu Principale");
+			choice = scanInt();
+			scan.nextLine();
+			
+			switch(choice) {
+				case 1: adminCreateCategory();
+					break;
+				case 2: adminUpdateCategory();
+					break;
+				case 3: adminDeleteCategory();
+					break;
+				case 4: 
+					break;
+				default : System.out.println("veuillez saisir une valeur entre 1 et 4");
+			}
+		}
 	}
 	
 	/**
@@ -192,6 +235,56 @@ public class ShopApp {
 		System.out.println(separator);
 		business.readCategories().forEach(c -> System.out.printf("| %-4s | %-32s | %-59s |%n", c.getId(), c.getName(), c.getDescription()));	
 		System.out.println(separator);
+	}
+	
+	/**
+	 * Méthode qui créer une catégorie
+	 */
+	private static void adminCreateCategory() {
+		System.out.println("Saisissez le nom de la catégorie (30 caractère max)");
+		String catName = scan.nextLine();
+		System.out.println("Saisissez la description de la catégorie (100 caractère max)");
+		String description = scan.nextLine();
+		Category newCategory = new Category(catName, description);
+		if(business.createCategory(newCategory)) {
+			System.out.println("Ajout de la catégorie ok !");
+		}
+	}
+	
+	/**
+	 * Méthode qui met à jour une catégorie
+	 */
+	private static void adminUpdateCategory() {
+		System.out.println("Selectionner l'id de la catégorie à mettre à jour");
+		int id = scanInt();
+		scan.nextLine();
+		if(business.readCategory(id) != null) {
+			System.out.println("Saisissez le nom de la catégorie (30 caractère max)");
+			String catName = scan.nextLine();
+			System.out.println("Saisissez la description de la catégorie (100 caractère max)");
+			String description = scan.nextLine();
+			Category updatedCategory = new Category(id, catName, description);
+			if(business.updateCategory(updatedCategory)) {
+				System.out.println("Mise à jour de la catégorie ok !");
+			}
+		}else {
+			System.out.println("la catégorie que vous souhaitez mettre à jour n'existe pas, pb de saisi id");
+		}
+	}
+	
+	/**
+	 * Méthode qui supprime une catégorie
+	 */
+	private static void adminDeleteCategory() {
+		System.out.println("Selectionner l'id de la catégorie à supprimer");
+		int id = scanInt();
+		if(business.readCategory(id) != null) {
+			if(business.deleteCategory(business.readCategory(id))) {
+				System.out.println("Suppression de la catégorie ok !");
+			}
+		}else {
+			System.out.println("la catégorie que vous souhaitez supprimer n'existe pas, pb de saisi id");
+		}
 	}
 	
 	/**
