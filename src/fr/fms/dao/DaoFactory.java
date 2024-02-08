@@ -8,7 +8,7 @@ import fr.fms.entities.User;
 
 public class DaoFactory {
 	
-	public static Dao<Formation> getArticleDao() {
+	public static Dao<Formation> getFormationDao() {
 		return new FormationDao();		
 	}
 	

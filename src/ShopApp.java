@@ -274,8 +274,7 @@ public class ShopApp {
 	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+";
 		if(category != null) {
 			System.out.println();
-			System.out.printf("                                                                 AFFICHAGE PAR CATEGORIE    %n");
-			System.out.printf("                                                                        %-10s               %n",category.getName());
+			System.out.printf("                                                                           CATEGORIE: " +  category.getName() + "   %n");
 			System.out.println(separator);
 			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
 			System.out.println(separator);
@@ -448,7 +447,7 @@ public class ShopApp {
 			if(flag) {
 				System.out.println(separator);
 				System.out.println();
-				System.out.println("MONTANT TOTAL : " + business.getTotal());
+				System.out.println("MONTANT TOTAL : " + business.getTotal() + "€");
 				System.out.println("Souhaitez vous passer commande ? Oui/Non :");
 				if(scan.next().equalsIgnoreCase("Oui")) {
 					nextStep();

@@ -18,7 +18,7 @@ import fr.fms.entities.User;
 
 public class IBusinessImpl implements IBusiness {	
 	private HashMap<Integer,Formation> cart;
-	private FormationDao formationDao = new FormationDao();
+	private Dao<Formation> formationDao = DaoFactory.getFormationDao();
 	private Dao<User> userDao = DaoFactory.getUserDao();
 	private Dao<Category> categoryDao = DaoFactory.getCategoryDao();
 	private Dao<Order> orderDao = DaoFactory.getOrderDao();
