@@ -181,7 +181,7 @@ public class ShopApp {
 			remote = false;
 		}
 		System.out.println("Saisissez le prix (En €) de la formation");
-		double price = scan.nextDouble();
+		double price = scanDouble();
 		System.out.println("Saisissez l'id de la catégorie à laquelle appartient la formation");
 		int idCategory = scanInt();
 		if(business.readCategory(idCategory) != null) {
@@ -216,7 +216,7 @@ public class ShopApp {
 				remote = false;
 			}
 			System.out.println("Saisissez le prix (En €) de la formation");
-			double price = scan.nextDouble();
+			double price = scanDouble();
 			System.out.println("Saisissez l'id de la catégorie à laquelle appartient la formation");
 			int idCategory = scanInt();
 			if(business.readCategory(idCategory) != null) {
@@ -624,6 +624,14 @@ public class ShopApp {
 		}
 		return scan.nextInt();
 	}
+	
+    public static double scanDouble() {
+        while (!scan.hasNextDouble()) {
+            System.out.println("Saisissez une valeur entière ou décimale svp");
+            scan.next();
+        }
+        return scan.nextDouble();
+    }
 	
 	public static boolean isValidEmail(String email) {
 		String regExp = "^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\\.[a-z][a-z]+$";	
