@@ -15,11 +15,11 @@ public class UserDao implements Dao<User> {
 	 */
 	@Override
 	public boolean create(User obj) {
-		String str = "INSERT INTO T_Users (Login,Password) VALUES (?,?,?);";
+		String str = "INSERT INTO T_Users (Login,Password,Admin) VALUES (?,?,?);";
 		try (PreparedStatement ps = connection.prepareStatement(str)){
 				ps.setString(1, obj.getLogin());
 				ps.setString(2, obj.getPassword());
-				ps.setBoolean(3, obj.isAdmin());
+				ps.setBoolean(3, false);
 				if( ps.executeUpdate() == 1)	return true;				
 		} catch (SQLException e) {
 			logger.severe("pb sql sur la création d'un utilisateur ");

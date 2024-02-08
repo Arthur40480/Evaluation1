@@ -4,15 +4,27 @@ public class User {
 	private int id;
 	private String login;
 	private String password;
-	private boolean admin;
+	private boolean admin = false;
 	
-	public User(int id, String login, String password, boolean admin) {
+	public User(int id, String login, String password) {
 		this.id = id;
+		this.login = login;
+		this.password = password;
+	}
+	
+	public User(String login, String password) {
+		this.login = login;
+		this.password = password;
+	}
+	
+	public User(String login, String password, boolean admin) {
 		this.login = login;
 		this.password = password;
 		this.admin = admin;
 	}
-	public User(String login, String password, boolean admin) {
+	
+	public User(int id, String login, String password, boolean admin) {
+		this.id = id;
 		this.login = login;
 		this.password = password;
 		this.admin = admin;
