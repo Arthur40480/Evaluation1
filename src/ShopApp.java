@@ -251,15 +251,16 @@ public class ShopApp {
 	 * Méthode qui affiche tous les articles en base en centrant le texte 
 	 */
 	public static void displayFormations() { 		
-	    String header = String.format("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
-	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+";
+	    String header = String.format("| %-4s | %-40s | %-85s | %-8s | %-10s | %-7s |", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
+	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+------------+---------+";
 	    System.out.println(separator);
 	    System.out.println(header);
 	    System.out.println(separator);
 	    business.readFormations().forEach(article -> {
-	    	System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n",
+	    	String remoteStatus = article.isRemote() ? "distanciel" : "présentiel";
+	    	System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-10s | %-7s |%n",
        article.getId(), article.getName(), article.getDescription(),
-       article.getDuration() + "jours", article.isRemote(), article.getUnitaryPrice() + "€");
+       article.getDuration() + "jours", remoteStatus, article.getUnitaryPrice() + "€");
 	    });
 	    System.out.println(separator);
 	}
@@ -271,14 +272,17 @@ public class ShopApp {
 		System.out.println("Saisissez l'id de la catégorie concerné");
 		int id = scanInt();
 		Category category = business.readOneCategory(id);
-	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+";
+	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+------------+---------+";
 		if(category != null) {
 			System.out.println();
 			System.out.printf("                                                                           CATEGORIE: " +  category.getName() + "   %n");
 			System.out.println(separator);
-			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
+			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-10s | %-7s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
 			System.out.println(separator);
-			business.readFormationsByCatId(id).forEach( f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n",f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice() + "€"));
+			business.readFormationsByCatId(id).forEach( f -> {
+				String remoteStatus = f.isRemote() ? "distanciel" : "présentiel";
+				System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-10s | %-7s |%n",f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", remoteStatus, f.getUnitaryPrice() + "€");
+			});
 			System.out.println(separator);
 		}
 		else System.out.println("Cette catégorie n'existe pas !");
@@ -288,7 +292,7 @@ public class ShopApp {
 	 * Méthode qui affiche toutes les formations suivant un mot-clé
 	 */
 	public static void displayFormationsByKeyword() {
-	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+";
+	    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+------------+---------+";
 		System.out.println("Saisissez un mot clé");
 		String keyword = scan.next();
 		ArrayList<Formation> formationList = business.readFormationsByKeyword(keyword);
@@ -297,9 +301,12 @@ public class ShopApp {
 		} else {
 			System.out.printf("                                                              RESULTAT DE LA RECHERCHE AVEC LE MOT-CLE: '" + keyword + "'   %n");
 			System.out.println(separator);
-			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
+			System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-10s | %-7s |%n", COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE);
 			System.out.println(separator);
-			formationList.forEach(f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s |%n", f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice() + "€"));
+			formationList.forEach(f -> {
+				String remoteStatus = f.isRemote() ? "distanciel" : "présentiel";
+				System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-10s | %-7s |%n", f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", remoteStatus, f.getUnitaryPrice() + "€");
+			});
 			System.out.println(separator);
 		}
 	}
@@ -437,13 +444,16 @@ public class ShopApp {
 		if(business.isCartEmpty()) 	System.out.println("PANIER VIDE");
 		else {
 			System.out.println("                                                                        CONTENU DU PANIER :");
-		    String header = String.format("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s | %-6s |",
+		    String header = String.format("| %-4s | %-40s | %-85s | %-8s | %-10s | %-7s | %-6s |",
 	                COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_DURATION, COLUMN_REMOTE, COLUMN_PRICE, COLUMN_QUANTITY);
-		    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+--------+---------+----------+";
+		    String separator = "+------+------------------------------------------+---------------------------------------------------------------------------------------+----------+------------+---------+----------+";
 		    System.out.println(separator);
 		    System.out.println(header);
 		    System.out.println(separator);
-			business.getCart().forEach(f -> System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-6s | %-7s | %-8s |%n", f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", f.isRemote(), f.getUnitaryPrice()  + "€", String.valueOf(f.getQuantity())));
+			business.getCart().forEach(f -> {
+				String remoteStatus = f.isRemote() ? "distanciel" : "présentiel";
+				System.out.printf("| %-4s | %-40s | %-85s | %-8s | %-10s | %-7s | %-8s |%n", f.getId(), f.getName(), f.getDescription(), f.getDuration() + "jours", remoteStatus, f.getUnitaryPrice()  + "€", String.valueOf(f.getQuantity()));
+			});
 			if(flag) {
 				System.out.println(separator);
 				System.out.println();
