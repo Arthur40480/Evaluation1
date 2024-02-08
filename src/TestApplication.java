@@ -1,15 +1,15 @@
-import fr.fms.dao.CategoryDao;
-import fr.fms.dao.FormationDao;
-import fr.fms.dao.UserDao;
-import fr.fms.entities.Category;
-import fr.fms.entities.Formation;
-import fr.fms.entities.User;
+//import fr.fms.dao.CategoryDao;
+//import fr.fms.dao.FormationDao;
+//import fr.fms.dao.UserDao;
+//import fr.fms.entities.Category;
+//import fr.fms.entities.Formation;
+//import fr.fms.entities.User;
 
 public class TestApplication {
 	
 	public static void main(String[] args) {
-		FormationDao formationDao = new FormationDao();
-		CategoryDao categoryDao = new CategoryDao();
+//		FormationDao formationDao = new FormationDao();
+//		CategoryDao categoryDao = new CategoryDao();
 		
 		// Test de la méthode readAllByKeyword():
 //		String keyword = "Developpement";

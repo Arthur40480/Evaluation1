@@ -14,6 +14,10 @@ public class OrderItem {
 		this.unitaryPrice = unitaryPrice;
 		this.idOrder = idOrder;
 	}
+	
+	public String toString() {
+		return "[OrderItem - Id: " + getIdOrderItem() + " Article: " + getIdArticle() + " Quantity: " + getQuantity() + " Prix: " + getUnitaryPrice() + " Order: " + getIdOrder() + "]";
+	}
 
 	public int getIdOrderItem() {
 		return idOrderItem;

@@ -30,7 +30,7 @@ public class Customer {
 	
 	@Override
 	public String toString() {
-		return "[Customer - Id: " + getIdCustomer() + "  Name: " + getName() + "  Prénom " + getFirstName() + 
+		return "[Customer - ID: " + getIdCustomer() + "  Name: " + getName() + "  Prénom " + getFirstName() + 
 				"  Email: " + getEmail() + "  Phone: " + getPhone() + "  Adress: " + getAddress() +"]";
 	}
 	

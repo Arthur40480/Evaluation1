@@ -9,9 +9,7 @@ public class Formation {
 	private double unitaryPrice;
 	private int category;
 	private int quantity = 1;
-	
-	public static final int MAX_STRING_LENGTH = 40;
-	
+		
 	public Formation(int id, String name, String description, int duration, boolean remote, double unitaryPrice, int category) {
 		this.id = id;
 		this.name = name;
@@ -50,15 +48,8 @@ public class Formation {
 	
 	@Override
 	public String toString() {
-		return centerString(String.valueOf(id)) + centerString(name) + centerString(description) + centerString(String.valueOf(remote) + centerString(String.valueOf(unitaryPrice))); 
-	}
-
-	public static String centerString(String str) {
-		if(str.length() >= MAX_STRING_LENGTH) return str;
-		String dest = "                    ";
-		int deb = (MAX_STRING_LENGTH - str.length())/2 ;
-		String data = new StringBuilder(dest).replace( deb, deb + str.length(), str ).toString();
-		return data;
+		return "[Formation - Id: " + getId() + " Name: " + getName() + " Description: " + getDescription() + " Duration: " + getDuration() + " Remote: " + isRemote() 
+				+ " Prix: " + getUnitaryPrice() + " Categorie: " + getCategory() + "]"; 
 	}
 	
 	public int getId() {
