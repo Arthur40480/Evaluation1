@@ -150,7 +150,7 @@ public class FormationDao implements Dao<Formation>{
 	 */
 	public ArrayList<Formation> readAllByKeyword(String keyword) {
 		ArrayList<Formation> formations = new ArrayList<Formation>();
-		String strSql = "SELECT * FROM T_Formations WHERE Name LIKE '%" + keyword + "%';";
+		String strSql = "SELECT * FROM T_Formations WHERE Name LIKE '%" + keyword + "%' OR Description LIKE '%" + keyword + "%';";
 		try(Statement statement = connection.createStatement()){
 			try(ResultSet resultSet = statement.executeQuery(strSql)){ 			
 				while(resultSet.next()) {
